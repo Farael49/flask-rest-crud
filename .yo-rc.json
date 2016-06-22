@@ -1,0 +1,10 @@
+{
+  "generator-flask-api": {
+    "appName": "project",
+    "database": "sqlite",
+    "databaseMapper": "sqlalchemy",
+    "versioningScheme": "major",
+    "currentVersion": "v1",
+    "urlPrefix": "/api"
+  }
+}

@@ -1,6 +1,0 @@
-flask==0.11.1
-flask-script==2.0.5
-WTForms==2.1
-SQLAlchemy==1.0.12
-Flask-SQLAlchemy==2.1
-flask-security

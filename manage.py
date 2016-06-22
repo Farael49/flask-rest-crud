@@ -1,18 +1,30 @@
-# Set the path
-import os, sys
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+#! /usr/bin/env python
 
-from flask_script import Manager, Server
-from project import app
+import os
 
+from flask_script import Manager
+
+from project import create_app, db
+
+
+app = create_app(os.getenv('PROJECT_CONFIG', 'default'))
 manager = Manager(app)
 
-# Turn on debugger by default and reloader
-manager.add_command("runserver", Server(
-    use_debugger = True,
-    use_reloader = True,
-    host = '0.0.0.0')
-)
 
-if __name__ == "__main__":
+@manager.shell
+def make_shell_context():
+    return dict(app=app, db=db)
+
+
+@manager.command
+def create_db():
+    '''Creates the db tables.'''
+    db.create_all()
+
+@manager.command
+def drop_db():
+    """Drops the db tables."""
+    db.drop_all()
+    
+if __name__ == '__main__':
     manager.run()
