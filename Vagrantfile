@@ -30,7 +30,7 @@ Vagrant.configure("2") do |config|
   #   apt-get install -y apache2
   SHELL
 
-	config.vm.provision "shell", path: "virtualenv/project_environment.sh"
-	config.vm.provision "shell", path: "flask/install.sh"
+	config.vm.provision "shell", path: "vagrant-config/virtualenv/project_environment.sh"
+	config.vm.provision "shell", path: "vagrant-config/flask/install.sh"
 
 end
