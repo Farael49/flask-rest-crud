@@ -10,7 +10,7 @@ Vagrant.configure("2") do |config|
   # For a complete reference, please see the online documentation at
   # https://docs.vagrantup.com.
 
-  config.vm.box = "hashicorp/precise64"
+  config.vm.box = "ubuntu/trusty64"
 
   config.vm.network "forwarded_port", guest: 5000, host: 5000
 
@@ -26,7 +26,7 @@ Vagrant.configure("2") do |config|
   # documentation for more information about their specific syntax and use.
   config.vm.provision "shell", inline: <<-SHELL
      apt-get update -y
-     apt-get install -y python3 python3-dev 
+     apt-get install -y python3 python3-dev python3-pip
   #   apt-get install sqlite3 -y
   #   apt-get install -y apache2
   SHELL
