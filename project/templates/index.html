@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="flaskAngular">
+
+<head>
+    <!--    <link rel='stylesheet' href='/stylesheets/style.css' /> -->
+    <meta charset="utf-8">
+    <link rel='stylesheet' href="%%url_for('static', filename='bootstrap/css/bootstrap.css')%%" />
+    <link rel='stylesheet' href='/static/bootstrap/css/blog-post.css'/>
+    <link href="/static/node_modules/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link rel='stylesheet' href='/static/bower_components/summernote/dist/summernote.css'/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>RestfulMean</title>
+
+</head>
+
+<body ng-controller="MainController as main">
+
+<div class="container">
+
+    <div class="row">
+
+        <div class="col-lg-8">
+
+            <h1>{{title}}</h1>
+
+
+            <!-- Author -->
+            <p class="lead">
+
+            </p>
+
+            <hr>
+
+            <!-- Date/Time -->
+            <span class="glyphicon glyphicon-time">
+                <p>{{ clock  | date:'medium'}}</p>
+            </span>
+            <hr>
+
+
+            <!-- <div>
+            <input ng-model="login.email" placeholder="Email"/>
+            <input ng-model="login.password" placeholder="Password">
+            <button ng-click="login(login)">+</button>
+            </div> -->
+
+            <div>
+                <form role="form">
+                    <div class="form-group">
+
+                        <ng-view></ng-view>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+
+        <!-- Blog Sidebar Widgets Column -->
+        <div class="col-md-4">
+
+            <!-- Blog Search Well -->
+            <div class="well">
+                <h4>Blog Search</h4>
+
+                <div class="input-group">
+                    <input type="text" class="form-control">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" type="button">
+                                        <span class="glyphicon glyphicon-search"></span>
+                                    </button>
+                                </span>
+                </div>
+                <!-- /.input-group -->
+            </div>
+
+            <div class="well" ng-show="!user._id">
+                <input class="form-control" type="text" ng-model="user.email" placeholder="Email">
+                <input class="form-control" type="password" ng-model="user.password" placeholder="Password">
+                <button class="sign" ng-click="signin(user)">Sign In</button>
+                <button class="sign" ng-click="signup(user)">Sign Up</button>
+                <a ng-click="signinfb()"><img src="https://fbcdn-dragon-a.akamaihd.net/hphotos-ak-xap1/t39.2178-6/851558_575761415814161_1164808389_n.png" /></a>
+            </div>
+
+            <div ng-show="user._id">
+                <button ng-click="logout()">LOGOUT</button>
+            </div>
+
+
+
+        </div>
+
+        <hr>
+
+    </div>
+</div>
+</div>
+<!-- Footer -->
+<footer>
+    <div class="row">
+        <div class="col-lg-12">
+            <p>Copyright &copy; RestfulMean - All rights reserved 2015</p>
+        </div>
+    </div>
+    <!-- /.row -->
+</footer>
+
+<script src="static/bootstrap/js/jquery.js"></script>
+<script src="static/bootstrap/js/bootstrap.min.js"></script>
+<script src="static/node_modules/underscore/underscore-min.js"></script>
+<script src="static/bower_components/summernote/dist/summernote.min.js"></script>
+<script src="static/node_modules/angular/angular.min.js"></script>
+<script src="static/bower_components/angular-summernote/dist/angular-summernote.min.js"></script>
+<script src="static/node_modules/angular-route/angular-route.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-resource.min.js"></script>
+<script src="static/config/app.js"></script>
+<script src="static/config/constants.js"></script>
+<script src="static/controllers/MainController.js"></script>
+<script src="static/controllers/ArticleListController.js"></script>
+<script src="static/controllers/CommentController.js"></script>
+<script src="static/models/ArticleFactory.js"></script>
+<script src="static/models/User.js"></script>
+<script src="static/config/route.js"></script>
+
+
+</body>
+</html>

@@ -1,0 +1,22 @@
+{
+  "name": "flask-angular",
+  "description": "Basic REST CRUD using Flask",
+  "main": "",
+  "authors": [
+    "cdouy"
+  ],
+  "license": "ISC",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-summernote": "~0.8.1",
+    "summernote": "~0.8.1"
+  }
+}

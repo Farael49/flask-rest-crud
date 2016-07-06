@@ -62,3 +62,7 @@ venv
 
 # Vagrant
 .vagrant/
+
+#NPM
+project/static/node_modules
+project/static/bower_components

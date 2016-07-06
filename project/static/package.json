@@ -1,0 +1,22 @@
+{
+  "name": "flask-angular",
+  "version": "1.0.0",
+  "description": "Basic REST CRUD using Flask",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Farael49/flask-rest-crud.git"
+  },
+  "author": "cdouy",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Farael49/flask-rest-crud/issues"
+  },
+  "homepage": "https://github.com/Farael49/flask-rest-crud#readme",
+  "dependencies": {
+    "angular": "1.5.7",
+    "angular-route":"1.5.7",
+    "angular-ui-router": "0.2.14",
+    "underscore": "1.8.3",
+    "font-awesome":"4.6.3"
+  }
+}

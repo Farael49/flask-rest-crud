@@ -27,6 +27,10 @@ Vagrant.configure("2") do |config|
   config.vm.provision "shell", inline: <<-SHELL
      apt-get update -y
      apt-get install -y python3 python3-dev python3-pip
+	 curl -sL https://deb.nodesource.com/setup_4.x | sudo bash -
+	 apt-get install -y nodejs
+	 apt-get install -y npm
+	 npm install npm@latest -g
   #   apt-get install sqlite3 -y
   #   apt-get install -y apache2
   SHELL
