@@ -1,4 +1,7 @@
-from flask import Flask, render_template
+from flask import (
+    Flask, 
+    render_template,
+)
 from flask_marshmallow import Marshmallow
 from flask_sqlalchemy import SQLAlchemy
 
@@ -34,3 +37,4 @@ def create_app(config_name):
 @app.route('/', methods=['GET'])
 def index():
     return render_template('index.html')
+

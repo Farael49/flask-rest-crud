@@ -31,6 +31,7 @@ Vagrant.configure("2") do |config|
 	 apt-get install -y nodejs
 	 apt-get install -y npm
 	 npm install npm@latest -g
+         npm install bower -g 
   #   apt-get install sqlite3 -y
   #   apt-get install -y apache2
   SHELL

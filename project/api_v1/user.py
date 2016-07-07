@@ -4,8 +4,8 @@ from . import api
 from .. import db
 from ..models.user import User
 from ..schemas.user import user_schema, users_schema, user_schema_secure
-import copy
-
+from ..validator import validate_json, validate_schema
+from ..util import copy_not_null
 @api.route('/users', methods=['GET'])
 def get_users():
     return users_schema.dumps(User.query.all()) 
@@ -17,9 +17,13 @@ def get_user(id):
 
 
 @api.route('/users', methods=['POST'])
+@validate_json
+#@validate_schema('user_schema')
 def create_user():
     scheme = user_schema.load(request.get_json(), partial=True)
     res = scheme.data
+    if res.email is None or res.password is None:
+        return jsonify({}), 400
     db.session.add(res)
     db.session.commit()
     return user_schema.jsonify(res)
@@ -29,7 +33,7 @@ def create_user():
 def update_user(id):
     user = User.query.get(id)
     scheme = user_schema_secure.load(request.get_json(), partial=True)  
-    #copyNotNull(scheme.data, user)
+    #copy_not_null(scheme.data, user)
     #user.id = id
     #user.created_date = None
     user.email = scheme.data.email
@@ -46,13 +50,3 @@ def delete_user(id):
     db.session.commit()
     return jsonify({}), 200
 
-
-def copyNotNull(fromA, toB):
-    if type(fromA) is type(toB):
-        for k, v in fromA.__class__.__dict__.items():
-            if v is not None:
-                setattr(toB, k.name, v)
-            else:
-                print(k + ' property is ' + v)
-    else:
-        print('WOOOOOOOOOOOOOOOOOOOW NOT COOL BRO') 
