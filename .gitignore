@@ -63,6 +63,14 @@ venv
 # Vagrant
 .vagrant/
 
+
+#Specific to the project
+
+#Generated js files
+project/static/js/
+
 #NPM
 project/static/node_modules
 project/static/bower_components
+
+
