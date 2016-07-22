@@ -8,6 +8,7 @@
     <link rel='stylesheet' href='/static/bootstrap/css/blog-post.css'/>
     <link href="/static/node_modules/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <link rel='stylesheet' href='/static/bower_components/summernote/dist/summernote.css'/>
+    <link rel='stylesheet' href='/static/node_modules/angularjs-toaster/toaster.css'/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
@@ -82,7 +83,6 @@
                 <input class="form-control" type="password" ng-model="user.password" placeholder="Password">
                 <button class="sign" ng-click="signin(user)">Sign In</button>
                 <button class="sign" ng-click="signup(user)">Sign Up</button>
-                <a ng-click="signinfb()"><img src="https://fbcdn-dragon-a.akamaihd.net/hphotos-ak-xap1/t39.2178-6/851558_575761415814161_1164808389_n.png" /></a>
             </div>
 
             <div ng-show="user._id">
@@ -116,7 +116,11 @@
 <script src="static/bower_components/angular-summernote/dist/angular-summernote.min.js"></script>
 <script src="static/node_modules/angular-route/angular-route.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-resource.min.js"></script>
-<script src="static/config/app.js"></script>
+<script src="static/node_modules/angularjs-toaster/toaster.js"></script>
+<script src="static/node_modules/angular-translate/dist/angular-translate.js"></script>
+<script src="static/bower_components/ng-dialog/js/ngDialog.min.js"></script>
+
+<!--<script src="static/config/app.js"></script>
 <script src="static/config/constants.js"></script>
 <script src="static/controllers/MainController.js"></script>
 <script src="static/controllers/ArticleListController.js"></script>
@@ -124,7 +128,8 @@
 <script src="static/models/ArticleFactory.js"></script>
 <script src="static/models/User.js"></script>
 <script src="static/config/route.js"></script>
-
+-->
+<script src="static/js/flask.js"></script>
 
 </body>
 </html>

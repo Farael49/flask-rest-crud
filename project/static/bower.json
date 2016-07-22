@@ -17,6 +17,7 @@
   ],
   "dependencies": {
     "angular-summernote": "~0.8.1",
-    "summernote": "~0.8.1"
+    "summernote": "~0.8.1",
+    "ng-dialog": "^0.6.2"
   }
 }

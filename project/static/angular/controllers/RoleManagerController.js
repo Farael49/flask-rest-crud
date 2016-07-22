@@ -1,6 +1,6 @@
 angular.module('flaskAngular').controller('RoleManagerController', function ($scope, RoleService, Role, ngDialog){
-    $scope.roles = RolesService.getRoles();
-    $scope.authorities = RolesService.getAuthorities();
+    $scope.roles = RoleService.getRoles();
+    $scope.authorities = RoleService.getAuthorities();
     $scope.displayedAuthorities = [];
     $scope.changeSelectedRole = function(role){
         changeWorkingRole(role);
@@ -33,7 +33,7 @@ angular.module('flaskAngular').controller('RoleManagerController', function ($sc
                 role.authorities.push($scope.authorities[index]);
             }
         }
-        RolesService.saveRole(role, $scope);
+        RoleService.saveRole(role, $scope);
     }
 
     $scope.deleteRole = function(role){
@@ -43,7 +43,7 @@ angular.module('flaskAngular').controller('RoleManagerController', function ($sc
             closeByDocument: false,
             template: 'DeleteRoleDialogTemplate'
         }).then(function() {
-            RolesService.deleteRole(role, $scope);
+            RoleService.deleteRole(role, $scope);
         });
     }
 

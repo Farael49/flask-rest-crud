@@ -1,5 +1,5 @@
 angular.module('flaskAngular').factory('Role', function ($resource, baseUrl){
-    var Role = $resource(baseUrl+'app/rest/role/:id',{id:'@id'},
+    var Role = $resource(baseUrl+'roles/:id',{id:'@id'},
         {
             'query': {
                 method: 'GET',

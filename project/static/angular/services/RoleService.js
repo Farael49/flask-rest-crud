@@ -15,10 +15,10 @@ angular.module('flaskAngular').factory('RoleService',function(Authorities, Role,
             }else{
                 role.$update({},
                     function(value){
-                        Message.getMessageOk("contrevenant.messages.saveSuccess");
-                    },
+                        Message.getMessageOk("messages.saveSuccess");
+                    }, 
                     function(error){
-                        Message.getMessageOk("contrevenant.messages.saveError");
+                        Message.getMessageOk("messages.saveError");
                     }
                 );
             }
@@ -38,10 +38,10 @@ angular.module('flaskAngular').factory('RoleService',function(Authorities, Role,
                     role.$delete({},
                         function(value){
                             deleteRoleFromRoles(role, $scope);
-                            Message.getMessageOk("contrevenant.messages.saveSuccess");
+                            Message.getMessageOk("messages.saveSuccess");
                         },
                         function(error){
-                            Message.getMessageOk("contrevenant.messages.saveError");
+                            Message.getMessageOk("messages.saveError");
                         }
                     );
                 }else{

@@ -6,8 +6,8 @@ roles = db.Table('user_role',
 )
 
 authorities = db.Table('role_authority',
-    db.Column('role_id', db.Integer, db.ForeignKey('role.id')),
-    db.Column('authority_id', db.Integer, db.ForeignKey('authority.id'))
+    db.Column('role_id', db.Integer, db.ForeignKey('role.id'), primary_key=True),
+    db.Column('authority_id', db.Integer, db.ForeignKey('authority.id'), primary_key=True)
 )
 
 class User(db.Model):
@@ -29,7 +29,7 @@ class Role(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
     description = db.Column(db.String)
-    authorities = db.relationship('Authority', secondary=authorities, backref=db.backref('roles', lazy='dynamic'))
+    authorities = db.relationship('Authority', secondary=authorities, backref=db.backref('roles', lazy='subquery'))
 
 class Authority(db.Model):
     id = db.Column(db.Integer, primary_key=True)

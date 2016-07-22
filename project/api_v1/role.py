@@ -7,17 +7,17 @@ from ..schemas.role import role_schema, roles_schema
 from ..validator import validate_json, validate_schema
 from ..util import copy_not_null
 
-@api.route('/role', methods=['GET'])
+@api.route('/roles', methods=['GET'])
 def get_roles():
     return roles_schema.dumps(Role.query.all()) 
 
 
-@api.route('/role/<int:id>', methods=['GET'])
+@api.route('/roles/<int:id>', methods=['GET'])
 def get_role(id):
     return role_schema.jsonify(Role.query.get(id))
 
 
-@api.route('/role', methods=['POST'])
+@api.route('/roles', methods=['POST'])
 @validate_json
 #@validate_schema('role_schema')
 def create_role():
@@ -30,7 +30,7 @@ def create_role():
     return role_schema.jsonify(res)
 
 
-@api.route('/role/<int:id>', methods=['PUT'])
+@api.route('/roles/<int:id>', methods=['PUT'])
 def update_role(id):
     role = Role.query.get(id)
     scheme = role_schema.load(request.get_json(), partial=True)  
@@ -40,9 +40,11 @@ def update_role(id):
     return role_schema.jsonify(role)
 
 
-@api.route('/role/<int:id>', methods=['DELETE'])
+@api.route('/roles/<int:id>', methods=['DELETE'])
 def delete_role(id):
-    Role.query.filter_by(id=id).delete()
+    role = Role.query.get(id)
+    role.authorities[:] = []
+    db.session.delete(role)
     db.session.commit()
     return jsonify({}), 200
 
