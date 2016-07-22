@@ -1,6 +1,7 @@
 from flask import (
     Flask, 
     render_template,
+    send_from_directory
 )
 from flask_marshmallow import Marshmallow
 from flask_sqlalchemy import SQLAlchemy
@@ -20,6 +21,7 @@ class CustomFlask(Flask):
 
 db = SQLAlchemy()
 ma = Marshmallow()
+
 app = CustomFlask(__name__)
 
 
@@ -38,3 +40,12 @@ def create_app(config_name):
 def index():
     return render_template('index.html')
 
+@app.route('/<path:path>')
+def send_templates(path):
+    return send_from_directory('templates', path)
+
+'''
+@app.route('/static/<path:path>')
+def send_statics(path):
+    return send_from_directory('templates', path)
+'''

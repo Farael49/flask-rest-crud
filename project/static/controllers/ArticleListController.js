@@ -5,6 +5,7 @@
 
 angular.module('flaskAngular')
     .controller('ArticleListController', function ($scope, $sce, Article) {
+
         $scope.sanitize = function (textToSanitize) {
             return $sce.trustAsHtml(textToSanitize);
         }

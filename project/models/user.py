@@ -1,5 +1,5 @@
 from .. import db
-
+from datetime import datetime
 roles = db.Table('user_role',
     db.Column('role_id', db.Integer, db.ForeignKey('role.id')),
     db.Column('user_id', db.Integer, db.ForeignKey('user.id'))
@@ -17,8 +17,8 @@ class User(db.Model):
     lastname = db.Column(db.String)
     email = db.Column(db.String, unique=True, nullable=False)
     password = db.Column(db.String)
-    created_date = db.Column(db.Date)
-    enabled = db.Column(db.Boolean, nullable=False)
+    created_date = db.Column(db.DateTime, default=datetime.utcnow())
+    enabled = db.Column(db.Boolean, default=True)
     roles = db.relationship('Role', secondary=roles, backref=db.backref('users', lazy='dynamic'))
     # Additional fields
     

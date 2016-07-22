@@ -6,6 +6,7 @@ from ..models.user import User
 from ..schemas.user import user_schema, users_schema, user_schema_secure
 from ..validator import validate_json, validate_schema
 from ..util import copy_not_null
+
 @api.route('/users', methods=['GET'])
 def get_users():
     return users_schema.dumps(User.query.all()) 
@@ -24,6 +25,7 @@ def create_user():
     res = scheme.data
     if res.email is None or res.password is None:
         return jsonify({}), 400
+    #res.created_date = str(datetime.now())
     db.session.add(res)
     db.session.commit()
     return user_schema.jsonify(res)

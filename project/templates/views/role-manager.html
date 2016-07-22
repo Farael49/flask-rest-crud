@@ -1,0 +1,87 @@
+<div class="wrapper wrapper-content content-white">
+    <div class="row">
+		<div class="col-sm-12">
+			<div class="ibox">
+				<h4 class="ibox-title" translate>
+					roleManager.title
+				</h4>
+				<form class="ibox-content" name="roleManagerForm">
+					<div class="form-group">
+						<label class="control-label" translate> roleManager.form.roles.select</label>
+						<div class="input-group">
+							<select chosen class="chosen-select" ng-change="changeSelectedRole(role)" style="width:350px;" ng-model="role" ng-options="r as r.name for r in roles | orderBy : 'name'" >
+								<option></option><!-- important to resolve a bug with chosen.js and angular :  it might not be the best solution -->
+							</select>
+							<button class="btn btn-primary glyphicon glyphicon-plus" ng-click="createNewRole()" tooltip="{{'roleManager.form.createRole' | translate }}" style="margin-left:10px" title="{{'global.button.add' | translate}}"></button>
+						</div>
+					</div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <label translate>roleManager.form.roles.name</label>
+                                <input type="text" class="form-control" ng-model="role.name" ng-disabled="role.deletable == false">
+                            </div>
+                        </div>
+                    </div>
+					<div class="form-group">
+						<div class="row">
+							<div class="col-sm-6">
+								<label translate>roleManager.form.roles.description</label>
+								<input type="text" class="form-control" ng-model="role.description">
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="swap-lists">
+							<div class="swap-lists-container">
+								<div class="left-column">
+									<label class="control-label" translate> roleManager.form.rights</label>
+									<select multiple ng-model="selectedAvailableAuthorities" ng-options="displayedAuthority.description group by displayedAuthority.category for displayedAuthority in displayedAuthorities | filter:displayedAuthority.affected='false' | orderBy:'description'">
+									</select>
+								</div>
+								<div class="swap-lists-buttons">
+									<button class="btn btn-sm btn-primary m-t-n-xs fa fa-arrow-right" ng-click="affectSelectedAuthority()" title="{{'global.button.add' | translate}}"></button>
+									<button class="btn btn-sm btn-primary m-t-xs fa fa-arrow-left" ng-click="removeSelectedAuthority()" title="{{'global.button.pullOff' | translate}}"></button>
+								</div>
+							</div>
+							<div class="swap-lists-container">
+								<div class="right-column">
+									<label class="control-label" translate> roleManager.form.roles.rights</label>
+									<select multiple ng-model="selectedRoleAuthorities" ng-options="displayedAuthority.description group by displayedAuthority.category for displayedAuthority in displayedAuthorities | filter:displayedAuthority.affected='true' | orderBy:'description' ">
+									</select>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="buttons col-xs-6">
+							<button class="btn btn-sm btn-success" ng-click="saveRole(role)" title="{{'roleManager.form.buttons.updateRole' | translate}}">
+								<i class="fa fa-save"></i>
+								<span translate>roleManager.form.buttons.updateRole</span>
+							</button>
+							<button class="btn btn-danger" ng-show="role.deletable" ng-click="deleteRole(role)" title="{{'roleManager.form.buttons.deleteRole' | translate}}">
+								<i class="fa fa-close"></i>
+								<span translate>roleManager.form.buttons.deleteRole</span>
+							</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+    </div>
+</div>
+<script type="text/ng-template" id="DeleteRoleDialogTemplate">
+    <div class="wrapper wrapper-content">
+        <div class="ibox" translate>roleManager.messages.confirm.deleteRole</div>
+        <div class="buttons">
+            <button class="btn btn-sm btn-danger pull-right m-t-n-xs" ng-click="closeThisDialog()" title="{{'global.button.cancel' | translate}}">
+				<i class="fa fa-ban"></i>
+				{{'global.button.cancel' | translate}}
+			</button>
+            <button class="btn btn-sm btn-success pull-right m-t-n-xs" ng-click="confirm(true)" title="{{'global.button.confirl' | translate}}">
+				<i class="fa fa-check"></i>
+				{{'global.button.confirm' | translate}}
+			</button>
+        </div>
+    </div>
+</script>
