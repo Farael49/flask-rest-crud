@@ -18,6 +18,7 @@
   "dependencies": {
     "angular-summernote": "~0.8.1",
     "summernote": "~0.8.1",
+    "chosen": "https://github.com/harvesthq/chosen/releases/download/v1.3.0/chosen_v1.3.0.zip",
     "ng-dialog": "^0.6.2"
   }
 }

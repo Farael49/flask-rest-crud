@@ -29,10 +29,13 @@ class Role(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
     description = db.Column(db.String)
-    authorities = db.relationship('Authority', secondary=authorities, backref=db.backref('roles', lazy='subquery'))
+    authorities = db.relationship('Authority', secondary=authorities, backref=db.backref('roles', lazy='dynamic'))
+    def __repr__(self):
+        return 'Role {}>'.format(self.id)
 
 class Authority(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
     description = db.Column(db.String)
-
+    def __repr__(self):
+        return 'Authority {}>'.format(self.id)

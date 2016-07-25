@@ -2,6 +2,7 @@ angular.module('flaskAngular').controller('RoleManagerController', function ($sc
     $scope.roles = RoleService.getRoles();
     $scope.authorities = RoleService.getAuthorities();
     $scope.displayedAuthorities = [];
+    console.log($scope)
     $scope.changeSelectedRole = function(role){
         changeWorkingRole(role);
     }

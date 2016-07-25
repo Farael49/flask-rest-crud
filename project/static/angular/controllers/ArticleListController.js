@@ -22,8 +22,6 @@ angular.module('flaskAngular')
         }
 
         getArticles();
-        console.log("data : ");
-        console.log($scope);
         $scope.addArticle = function (data) {
             Article.save(data, function (res) {
                 $scope.articles.push(res);
