@@ -1,15 +1,26 @@
 from flask import jsonify, request
 
 from . import api
-from .. import db
+from .. import db, bcrypt
 from ..models.user import User
 from ..schemas.user import user_schema, users_schema, user_schema_secure
 from ..validator import validate_json, validate_schema
 from ..util import copy_not_null
+from flask_login import login_user, logout_user, login_required, current_user
 
-@api.route('/login', methods=['GET'])
-def get_users():
-    return users_schema.dumps(User.query.all()) 
+@api.route('/users/login', methods=['GET', 'POST'])
+def login():
+    credentials = request.get_json()
+    user = User.query.filter_by(email=credentials['email']).first()
+    if user and bcrypt.check_password_hash(user.password, credentials['password']):
+        login_user(user)
+        return user_schema.jsonify(user)
+    return jsonify({}), 404
+
+@api.route('/users/logout')
+@login_required
+def logout():
+    logout_user()
 
 @api.route('/users', methods=['GET'])
 def get_users():

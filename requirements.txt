@@ -12,3 +12,4 @@ marshmallow==2.7.3
 marshmallow-sqlalchemy==0.8.1
 six==1.10.0
 Flask-Bcrypt==0.7.1
+Flask-Login==0.3.2

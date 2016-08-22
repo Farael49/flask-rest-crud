@@ -5,8 +5,9 @@ from flask import (
 )
 from flask_marshmallow import Marshmallow
 from flask_sqlalchemy import SQLAlchemy
-
+from flask_bcrypt import Bcrypt
 from config import config
+from flask_login import LoginManager
 
 class CustomFlask(Flask):
     jinja_options = Flask.jinja_options.copy()
@@ -21,19 +22,21 @@ class CustomFlask(Flask):
 
 db = SQLAlchemy()
 ma = Marshmallow()
-
 app = CustomFlask(__name__)
+login_manager = LoginManager()
+login_manager.init_app(app)
+bcrypt = Bcrypt(app)
 
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.filter(User.id == int(user_id)).first()
 
 def create_app(config_name):
     app.config.from_object(config[config_name])
-
     db.init_app(app)
     ma.init_app(app)
-
     from .api_v1 import api as api_v1_blueprint
     app.register_blueprint(api_v1_blueprint, url_prefix='/api/v1')
-
     return app
 
 @app.route('/', methods=['GET'])
