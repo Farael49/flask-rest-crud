@@ -7,18 +7,18 @@
 				</h4>
 				<form class="ibox-content" name="roleManagerForm">
 					<div class="form-group">
-						<label class="control-label"> roleManager.form.roles.select</label>
+						<label class="control-label"> Roles</label>
 						<div class="input-group">
-							<select chosen class="chosen-select" ng-change="changeSelectedRole(role)" style="width:350px;" ng-model="role" ng-options="r as r.name for r in roles | orderBy : 'name'" >
+							<select chosen class="chosen-select" ng-model="role" ng-change="changeSelectedRole(role)" style="width:350px;" ng-options="r as r.name for r in roles | orderBy : 'name'" >
 								<option></option><!-- important to resolve a bug with chosen.js and angular :  it might not be the best solution -->
 							</select>
-							<button class="btn btn-primary glyphicon glyphicon-plus" ng-click="createNewRole()" tooltip="{{'roleManager.form.createRole' }}" style="margin-left:10px" title="{{'global.button.add' }}"></button>
+							<button class="btn btn-primary glyphicon glyphicon-plus" ng-click="createNewRole()" tooltip="Créer un nouveau rôle" style="margin-left:10px" title="Créer"></button>
 						</div>
 					</div>
                     <div class="form-group">
                         <div class="row">
                             <div class="col-sm-6">
-                                <label>roleManager.form.roles.name</label>
+                                <label>Nom</label>
                                 <input type="text" class="form-control" ng-model="role.name" ng-disabled="role.deletable == false">
                             </div>
                         </div>
@@ -26,7 +26,7 @@
 					<div class="form-group">
 						<div class="row">
 							<div class="col-sm-6">
-								<label>roleManager.form.roles.description</label>
+								<label>Description</label>
 								<input type="text" class="form-control" ng-model="role.description">
 							</div>
 						</div>
@@ -35,7 +35,7 @@
 						<div class="swap-lists">
 							<div class="swap-lists-container">
 								<div class="left-column">
-									<label class="control-label"> roleManager.form.rights</label>
+									<label class="control-label">Droits disponibles</label>
 									<select multiple ng-model="selectedAvailableAuthorities" ng-options="displayedAuthority.description group by displayedAuthority.category for displayedAuthority in displayedAuthorities | filter:displayedAuthority.affected='false' | orderBy:'description'">
 									</select>
 								</div>
@@ -46,7 +46,7 @@
 							</div>
 							<div class="swap-lists-container">
 								<div class="right-column">
-									<label class="control-label"> roleManager.form.roles.rights</label>
+									<label class="control-label">Droits du rôle</label>
 									<select multiple ng-model="selectedRoleAuthorities" ng-options="displayedAuthority.description group by displayedAuthority.category for displayedAuthority in displayedAuthorities | filter:displayedAuthority.affected='true' | orderBy:'description' ">
 									</select>
 								</div>
@@ -55,13 +55,13 @@
 					</div>
 					<div class="form-group">
 						<div class="buttons col-xs-6">
-							<button class="btn btn-sm btn-success" ng-click="saveRole(role)" title="{{'roleManager.form.buttons.updateRole' }}">
+							<button class="btn btn-sm btn-success" ng-click="saveRole(role)" title="Mettre à jour">
 								<i class="fa fa-save"></i>
-								<span>roleManager.form.buttons.updateRole</span>
+								<span>Mettre à jour</span>
 							</button>
-							<button class="btn btn-danger" ng-show="role.deletable" ng-click="deleteRole(role)" title="{{'roleManager.form.buttons.deleteRole' }}">
+							<button class="btn btn-danger" ng-show="role.deletable" ng-click="deleteRole(role)" title="Supprimer">
 								<i class="fa fa-close"></i>
-								<span>roleManager.form.buttons.deleteRole</span>
+								<span>Supprimer</span>
 							</button>
 						</div>
 					</div>

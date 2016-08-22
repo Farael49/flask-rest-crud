@@ -7,6 +7,10 @@ from ..schemas.user import user_schema, users_schema, user_schema_secure
 from ..validator import validate_json, validate_schema
 from ..util import copy_not_null
 
+@api.route('/login', methods=['GET'])
+def get_users():
+    return users_schema.dumps(User.query.all()) 
+
 @api.route('/users', methods=['GET'])
 def get_users():
     return users_schema.dumps(User.query.all()) 
@@ -23,8 +27,13 @@ def get_user(id):
 def create_user():
     scheme = user_schema.load(request.get_json(), partial=True)
     res = scheme.data
+    if User.query.filter_by(email=res.email).scalar() is not None:
+        return jsonify({}), 409
     if res.email is None or res.password is None:
         return jsonify({}), 400
+    if res.username is None:
+        res.username = res.email
+    res.password = bcrypt.generate_password_hash(res.password)
     #res.created_date = str(datetime.now())
     db.session.add(res)
     db.session.commit()

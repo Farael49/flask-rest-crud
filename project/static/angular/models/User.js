@@ -6,8 +6,8 @@
 
 
 angular.module('flaskAngular')
-    .factory('User', function($resource){
-        return $resource('/users/:id/:target',{
+    .factory('User', function($resource, baseUrl){
+        return $resource(baseUrl + 'users/:id/:target',{
                 id:"@id",
                 target:"@target",
             },
@@ -28,14 +28,6 @@ angular.module('flaskAngular')
                    method:'GET',
                     params:{
                         target:"logged"
-                    }
-                },
-
-                loginfb:{
-                    method: 'GET',
-                    params:{
-                        id: "login",
-                        target: "facebook"
                     }
                 }
             });

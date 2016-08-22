@@ -42,7 +42,6 @@ def update_role(id):
         return jsonify({}), 404
     scheme = role_schema.load(request.get_json(), partial=True)  
     role.authorities = scheme.data.authorities
-    #role.authorities = authorities_schema.load(scheme.data.authorities, partial=True)
     db.session.add(role)
     db.session.commit()
     return role_schema.jsonify(role)

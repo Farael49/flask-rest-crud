@@ -2,7 +2,6 @@ angular.module('flaskAngular').controller('RoleManagerController', function ($sc
     $scope.roles = RoleService.getRoles();
     $scope.authorities = RoleService.getAuthorities();
     $scope.displayedAuthorities = [];
-    console.log($scope)
     $scope.changeSelectedRole = function(role){
         changeWorkingRole(role);
     }
@@ -28,7 +27,6 @@ angular.module('flaskAngular').controller('RoleManagerController', function ($sc
     $scope.saveRole = function(role){
         var affectedAuthorities = _.filter($scope.displayedAuthorities , function (auth){ return auth.affected === true});
         role.authorities=[];
-
         for(var index=0; index < $scope.authorities.length; index++){
             if(_.where(affectedAuthorities, $scope.authorities[index]).length > 0){
                 role.authorities.push($scope.authorities[index]);
@@ -50,9 +48,9 @@ angular.module('flaskAngular').controller('RoleManagerController', function ($sc
 
     var changeWorkingRole=function(role){
         $scope.displayedAuthorities = [];
-        for(var index=0; index < $scope.authorities.length; index++){
-            var displayedAuthority = _.clone($scope.authorities[index]);
-            if(_.where(role.authorities, displayedAuthority).length > 0){
+        for(var i=0; i < $scope.authorities.length; i++){
+            var displayedAuthority = _.clone($scope.authorities[i]);
+            if(_.filter(role.authorities, function(auth){return displayedAuthority.id == auth.id;}).length > 0){
                 displayedAuthority.affected = true;
             }else{
                 displayedAuthority.affected = false;

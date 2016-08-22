@@ -14,7 +14,7 @@ angular.module('flaskAngular')
 
     $scope.signup = function(data){
         User.save(data, function(res){
-            $scope.user = res;
+            $scope.signin(data);
         });
     }
     $scope.signin = function(data){
@@ -27,11 +27,8 @@ angular.module('flaskAngular')
             $scope.user = res;
         });
     }
-        $scope.clock = Date.now();
-        $interval(function () { $scope.clock = Date.now(); }, 1000);
+    $scope.clock = Date.now();
+    $interval(function () { $scope.clock = Date.now(); }, 1000);
 
-    $scope.signinfb = function(){
-        $window.location = $window.location.protocol + "//" + $window.location.host + $window.location.pathname + "users/login/facebook";
-    }
 
     });
