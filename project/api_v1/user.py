@@ -1,12 +1,17 @@
 from flask import jsonify, request
 
 from . import api
-from .. import db, bcrypt
+from .. import db, bcrypt, login_manager
 from ..models.user import User
-from ..schemas.user import user_schema, users_schema, user_schema_secure
+from ..schemas.user import user_schema, users_schema, user_schema_secure, users_schema_secure
 from ..validator import validate_json, validate_schema
 from ..util import copy_not_null
 from flask_login import login_user, logout_user, login_required, current_user
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.filter(User.id == int(user_id)).first()
 
 @api.route('/users/login', methods=['GET', 'POST'])
 def login():
@@ -14,22 +19,29 @@ def login():
     user = User.query.filter_by(email=credentials['email']).first()
     if user and bcrypt.check_password_hash(user.password, credentials['password']):
         login_user(user)
-        return user_schema.jsonify(user)
-    return jsonify({}), 404
+        return user_schema_secure.jsonify(user)
+    return jsonify({}), 401
 
 @api.route('/users/logout')
 @login_required
 def logout():
     logout_user()
+    return jsonify({}), 200
 
 @api.route('/users', methods=['GET'])
+@login_required
 def get_users():
-    return users_schema.dumps(User.query.all()) 
+    return users_schema_secure.dumps(User.query.all()) 
 
+@api.route('/users/logged')
+@login_required
+def get_current_user():
+    return user_schema_secure.jsonify(current_user)
 
 @api.route('/users/<int:id>', methods=['GET'])
+@login_required
 def get_user(id):
-    return user_schema.jsonify(User.query.get(id))
+    return user_schema_secure.jsonify(User.query.get(id))
 
 
 @api.route('/users', methods=['POST'])
@@ -48,10 +60,11 @@ def create_user():
     #res.created_date = str(datetime.now())
     db.session.add(res)
     db.session.commit()
-    return user_schema.jsonify(res)
+    return user_schema_secure.jsonify(res)
 
 
 @api.route('/users/<int:id>', methods=['PUT'])
+@login_required
 def update_user(id):
     user = User.query.get(id)
     scheme = user_schema_secure.load(request.get_json(), partial=True)  
@@ -63,10 +76,11 @@ def update_user(id):
     #user.id = id
     db.session.add(user)
     db.session.commit()
-    return user_schema.jsonify(user)
+    return user_schema_secure.jsonify(user)
 
 
 @api.route('/users/<int:id>', methods=['DELETE'])
+@login_required
 def delete_user(id):
     User.query.filter_by(id=id).delete()
     db.session.commit()

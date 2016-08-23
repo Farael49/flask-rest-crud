@@ -62,15 +62,15 @@
 
         <!-- Blog Sidebar Widgets Column -->
         <div class="col-md-4">
-
-            <div class="well" ng-show="!user._id">
-                <input class="form-control" type="text" ng-model="user.email" placeholder="Email">
-                <input class="form-control" type="password" ng-model="user.password" placeholder="Password">
-                <button class="sign" ng-click="signin(user)">Sign In</button>
-                <button class="sign" ng-click="signup(user)">Sign Up</button>
-            </div>
-
-            <div ng-show="user._id">
+            <form>
+                <div class="well" ng-show="!user.id">
+                    <input class="form-control" type="text" ng-model="user.email" placeholder="Email">
+                    <input class="form-control" type="password" ng-model="user.password" placeholder="Password">
+                    <button class="sign" ng-click="signin(user)" type="submit">Sign In</button>
+                    <button class="sign" ng-click="signup(user)">Sign Up</button>
+                </div>
+            </form>
+            <div ng-show="user.id">
                 <button ng-click="logout()">LOGOUT</button>
             </div>
 

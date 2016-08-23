@@ -21,15 +21,12 @@ class CustomFlask(Flask):
     ))
 
 db = SQLAlchemy()
-ma = Marshmallow()
 app = CustomFlask(__name__)
+ma = Marshmallow(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
 bcrypt = Bcrypt(app)
 
-@login_manager.user_loader
-def load_user(user_id):
-    return User.query.filter(User.id == int(user_id)).first()
 
 def create_app(config_name):
     app.config.from_object(config[config_name])

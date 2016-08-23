@@ -7,13 +7,16 @@ from ..schemas.role import role_schema, roles_schema
 from ..schemas.authority import authorities_schema
 from ..validator import validate_json, validate_schema
 from ..util import copy_not_null
+from flask_login import login_required, current_user
 
 @api.route('/roles', methods=['GET'])
+@login_required
 def get_roles():
     return roles_schema.dumps(Role.query.all()) 
 
 
 @api.route('/roles/<int:id>', methods=['GET'])
+@login_required
 def get_role(id):
     return role_schema.jsonify(Role.query.get(id))
 
@@ -21,6 +24,7 @@ def get_role(id):
 @api.route('/roles', methods=['POST'])
 @api.route('/roles/<int:id>', methods=['POST'])
 @validate_json
+@login_required
 #@validate_schema('role_schema')
 def create_role(id):
     scheme = role_schema.load(request.get_json(), partial=True)
@@ -36,6 +40,7 @@ def create_role(id):
 
 @api.route('/roles/<int:id>', methods=['PUT'])
 @validate_json
+@login_required
 def update_role(id):
     role = Role.query.get(id)
     if role is None:
@@ -48,6 +53,7 @@ def update_role(id):
 
 
 @api.route('/roles/<int:id>', methods=['DELETE'])
+@login_required
 def delete_role(id):
     role = Role.query.get(id)
     role.authorities[:] = []
