@@ -17,26 +17,26 @@ angular.module('flaskAngular').controller('UserModificationPopinController', fun
         });
     }
     $scope.askCancel = function(){
-           if($scope.usersModificationForm.$dirty === true){
-               ngDialog.openConfirm({
-                   showClose: false,
-                   closeByEscape: false,
-                   closeByDocument: false,
-                   template: 'views/popin/confirm_cancel.html'
-               }).then(function() {
-                   $scope.closeThisDialog();
-               });
-           }else{
-               $scope.closeThisDialog();
-           }
-       };
+      if($scope.usersModificationForm.$dirty === true){
+         ngDialog.openConfirm({
+             showClose: false,
+             closeByEscape: false,
+             closeByDocument: false,
+             template: 'views/popin/confirm_cancel.html'
+         }).then(function() {
+             $scope.closeThisDialog();
+         });
+      }else{
+         $scope.closeThisDialog();
+      }
+   }; 
 
     $scope.saveDialog = function(){
            ngDialog.openConfirm({
                showClose: false,
                closeByEscape: false,
                closeByDocument: false,
-               template: 'views/administration/popin/confirm_change.html'
+               template: 'views/popin/confirm_change.html'
            }).then(function() {
                save();
            });
@@ -51,15 +51,17 @@ angular.module('flaskAngular').controller('UserModificationPopinController', fun
     }
 
     var save = function(){
+        console.log("SAVE : ")
+        console.log($scope)
         var promise;
         var succesMessage;
         if ('id' in $scope.ngDialogData) {
-            $scope.loadedUser.roleSet = $scope.userRoles;
-            promise = User.updateUser({id:$scope.loadedUser.id},$scope.loadedUser);
+            $scope.loadedUser.roles = $scope.userRoles;
+            promise = User.update({id:$scope.loadedUser.id},$scope.loadedUser);
             succesMessage = "administration.user_list.messages.saveSuccess";
         } else {
-            $scope.ngDialogData.roleSet = $scope.userRoles;
-            promise = User.createUser($scope.ngDialogData);
+            $scope.ngDialogData.roles = $scope.userRoles;
+            promise = User.save($scope.ngDialogData);
             succesMessage = "administration.user_list.messages.createSuccess";
         }
         promise.$promise.then(

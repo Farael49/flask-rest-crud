@@ -1,4 +1,4 @@
-<div class="neo-dialog-content">
+<div>
     <div class="wrapper wrapper-content" style="padding-bottom:0px;">
         <form editable-form name="usersModificationForm" oncancel="askCancel()" onbeforesave="saveDialog()">
             <div class="ibox float-e-margins content-white">
@@ -15,54 +15,52 @@
                         </ul>
                     </div>
                     <div class="row">
-                        <div class="col-xs-3 col-md-offset-3" ng-class="{'has-error':usersModificationForm.login.$invalid}">
-                            <label class="obligatoire" translate>administration.user_list.headers.login</label>
+                        <div class="col-xs-6" ng-class="{'has-error':usersModificationForm.login.$invalid}">
+                            <label class="obligatoire" translate>login</label>
                             <input name="username" class="form-control" ng-model="ngDialogData.username" required/>
                         </div>
-                        <div class="col-xs-3" ng-class="{'has-error':usersModificationForm.email.$invalid}">
-                            <label class="obligatoire" translate>administration.user_list.headers.email</label>
+                        <div class="col-xs-6" ng-class="{'has-error':usersModificationForm.email.$invalid}">
+                            <label class="obligatoire" translate>email</label>
                             <input name="email" type="email" class="form-control" ng-model="ngDialogData.email" required/>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-xs-3 col-md-offset-3" ng-class="{'has-error':usersModificationForm.lastName.$invalid}">
-                            <label class="obligatoire" translate>administration.user_list.headers.nom</label>
-                            <input name="nom" class="form-control" ng-model="ngDialogData.lastName" required/>
+                        <div class="col-xs-6" ng-class="{'has-error':usersModificationForm.lastname.$invalid}">
+                            <label class="obligatoire" translate>nom</label>
+                            <input name="nom" class="form-control" ng-model="ngDialogData.lastname" required/>
                         </div>
-                        <div class="col-xs-3" ng-class="{'has-error':usersModificationForm.firstName.$invalid}">
-                            <label class="obligatoire" translate>administration.user_list.headers.prenom</label>
-                            <input name="prenom" class="form-control" ng-model="ngDialogData.firstName" required/>
+                        <div class="col-xs-6" ng-class="{'has-error':usersModificationForm.firstname.$invalid}">
+                            <label class="obligatoire" translate>prenom</label>
+                            <input name="prenom" class="form-control" ng-model="ngDialogData.firstname" required/>
                         </div>
                     </div>
                     <div class="row" >
-                        <div ng-if="loadedUser" class="col-xs-3 col-md-offset-3" ng-class="{'has-error':usersModificationForm.password.$invalid}">
+                        <div ng-if="loadedUser" class="col-xs-6" ng-class="{'has-error':usersModificationForm.password.$invalid}">
                             <label translate>global.form.newpassword</label>
                             <a class="btn btn-sm m-t-xs btn-primary" ng-click="generatePassword()" title="{{'global.button.reinitialize' | translate}}" translate>global.button.reinitialize</a>
                             <span ng-id="ngDialogData.passwordPlain">{{ngDialogData.passwordPlain}}</span>
                         </div>
-                        <div ng-if="!loadedUser" class="col-xs-3 col-md-offset-3" ng-class="{'has-error':usersModificationForm.password.$invalid}">
+                        <div ng-if="!loadedUser" class="col-xs-6" ng-class="{'has-error':usersModificationForm.password.$invalid}">
                             <label class="obligatoire" translate>global.form.password</label>
                             <input name="password" class="form-control" ng-model="ngDialogData.password" required/>
                         </div>
-                    </div>
-                    <div class="row" >
-                        <div class="col-xs-3 col-md-offset-3">
-                            <label translate>administration.user_list.headers.dateSortie</label>
+                        <div class="col-xs-6">
+                            <label translate>dateSortie</label>
                             <input name="exitDate" class="form-control input-sm" ng-model="ngDialogData.exitDate" bs-datepicker autoclose="1" input-mask="99/99/9999"/>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-xs-6 text-align" ng-if="ngDialogData.nbEssaisLogin >= 0">
-                            <label translate>administration.user_list.headers.loginAttempts</label><div class="clearfix"></div>
+                            <label translate>loginAttempts</label><div class="clearfix"></div>
                             <h3>
                                 <span class="label label-sm m-t-xs ng-binding" ng-class="ngDialogData.nbEssaisLogin >= 5 ? 'label-danger' : 'label-warning'">{{ngDialogData.nbEssaisLogin}}</span>
-                                <a class="btn btn-sm m-t-xs btn-primary" ng-click="reinitNbEssaisLogin()" title="{{'global.button.reinitialize' | translate}}" translate>global.button.reinitialize</a>
+                                <a class="btn btn-sm m-t-xs btn-primary" ng-click="reinitNbEssaisLogin()" title="reinitialize">reinitialize</a>
                             </h3>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-xs-6 col-md-offset-3" ng-class="{'has-error':usersModificationForm.roles.$invalid}">
-                            <label translate>administration.user_list.headers.role</label>
+                        <div class="col-xs-6" ng-class="{'has-error':usersModificationForm.roles.$invalid}">
+                            <label translate>role</label>
                             <br />
                             <label ng-repeat="role in roles | orderBy:'name'">
                                 <input type="checkbox" checklist-model="userRoles" checklist-value="role" checklist-comparator="compareFn"> {{role.name}}
@@ -71,18 +69,16 @@
                     </div>
                 </div>
             </div>
-            <div style="height:20px">
-				<button type="button" class="btn btn-sm btn-danger pull-right m-t-n-md"
-					ng-click="askCancel()" title="{{'global.button.cancel' | translate}}">
-					<i class="fa fa-ban"></i>
-					<span translate>global.button.cancel</span>
-				</button>
-				<button type="submit" class="btn btn-sm btn-success pull-right m-t-n-md"
-					ng-disabled="usersModificationForm.$pristine" title="{{'global.button.save' | translate}}">
-					<i class="fa fa-check"></i>
-					<span translate>global.button.save</span>
-				</button>
-            </div>
+			<button type="button" class="btn btn-sm btn-danger"
+				ng-click="askCancel()" title="cancel">
+				<i class="fa fa-ban"></i>
+				<span translate>cancel</span>
+			</button>
+			<button type="submit" class="btn btn-sm btn-success"
+				ng-disabled="usersModificationForm.$pristine" title="save" ng-click="saveDialog()">
+				<i class="fa fa-check"></i>
+				<span translate>save</span>
+			</button>
         </form>
 
     </div>

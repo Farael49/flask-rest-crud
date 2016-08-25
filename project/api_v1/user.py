@@ -71,9 +71,10 @@ def update_user(id):
     #copy_not_null(scheme.data, user)
     #user.id = id
     #user.created_date = None
-    user.email = scheme.data.email
+    #user.email = scheme.data.email
     #user = scheme.data
     #user.id = id
+    #user.roles = []
     db.session.add(user)
     db.session.commit()
     return user_schema_secure.jsonify(user)

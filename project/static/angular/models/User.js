@@ -29,6 +29,9 @@ angular.module('flaskAngular')
                     params:{
                         target:"logged"
                     }
+                },
+                update:{
+                    method:'PUT'
                 }
             });
     });

@@ -11,5 +11,6 @@ angular.module('flaskAngular',
 	'toaster', 
 	'ngDialog',
 	'truncate',
-	'utils'
+	'utils',
+	'checklist-model'
 	]);
