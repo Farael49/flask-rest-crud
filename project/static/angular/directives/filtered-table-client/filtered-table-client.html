@@ -1,0 +1,73 @@
+<div ng-class="{'table-responsive':!tableScroll}">
+    <table class="table table-striped table-bordered table-hover table-clickable" ng-class="{'table-scroll':tableScroll}" style="position: relative;">
+        <thead>
+        <tr>
+            <th ng-repeat="header in headers" ng-class="header.css" ng-style="tableScroll && {'width': '{{100 / headers.length}}%'}">
+                <sort-by onsort="onSort" sortdir="sortDir" sortedby="sortBy" sortvalue="{{ header.value }}" sorttitle="{{ header.title }}">
+                    {{ header.title}}
+                </sort-by>
+            </th>
+        </tr>
+        <tr>
+            <th ng-repeat="header in headers" ng-class="header.css" ng-style="tableScroll && {'width': '{{100 / headers.length}}%'}">
+                <filtered-input header="header" filter-result="filterResult(value)" models="models" filter-on-key-up="true"></filtered-input>
+            </th>
+        </tr>
+        </thead>
+        <tbody ng-hide="model.length == 0" ng-style="tableScroll && {'max-height': '{{tableScroll}}px'}">
+			<tr ng-repeat="object in model | listFilterStrict: models2: modelsExactMatch | orderBy: sortBy: sortDir != 'asc' | offset: (pageNumber - 1) * pageSize | limitTo: pageSize" ng-class="{{rowNgClass}}" class="td-full" ng-if="sref">
+                <td ng-attr-title="{{resolve(object,header,true)}}" ng-repeat="header in headers" ng-class="header.css" ng-init="object.sref = callSrefGo(object)" ng-style="tableScroll && {'width': '{{100 / headers.length}}%'}">
+                    <div ng-if="(header.type != 'button' && header.type != 'checkbox') || (header.showCondition != undefined && !header.showCondition(object))">
+                        <a ui-sref="{{object.sref}}">
+                            {{resolve(object, header,false)}}
+                        </a>
+                    </div>
+                    <div ng-if="header.type == 'button' && (header.showCondition == undefined && resolve(object,header,false) != undefined  || header.showCondition != undefined && header.showCondition(object))">
+                        <button class="btn btn-primary btn-sm m-t-xxs" ng-click="header.resolveButton(object)">
+                            <i class="{{header.buttonIcon}}"></i>&nbsp;
+                            <span>{{(header.translate | translate) || resolve(object, header,false)}}</span>
+                        </button>
+                    </div>
+                    <div ng-if="header.type == 'checkbox' && (header.showCondition == undefined || header.showCondition != undefined && header.showCondition(object))">
+                        <input type="checkbox" ng-model="object[header.value]">
+                    </div>
+                </td>
+            </tr>
+            <tr ng-click="clickGo(object)" ng-if="!sref" ng-repeat="object in model | listFilterStrict: models2: modelsExactMatch | orderBy: sortBy: sortDir != 'asc' | offset: (pageNumber - 1) * pageSize | limitTo: pageSize" ng-class="{{rowNgClass}}">
+                <td ng-attr-title="{{resolve(object,header,true)}}" ng-repeat="header in headers" ng-class="header.css" ng-style="tableScroll && {'width': '{{100 / headers.length}}%'}" ng-click="header.noClick && stopEvent($event)">
+                    <div ng-if="(header.type != 'button' && header.type != 'checkbox') || (header.showCondition != undefined && !header.showCondition(object))">
+                        {{resolve(object, header,false)}}
+                    </div>
+                    <div ng-if="header.type == 'button' && (header.showCondition == undefined && resolve(object,header,false) != undefined  || header.showCondition != undefined && header.showCondition(object))">
+                        <button class="btn btn-primary btn-sm m-t-xxs" ng-click="header.resolveButton(object)">
+                            <i class="{{header.buttonIcon}}"></i>&nbsp;
+                            <span>{{(header.translate | translate) || resolve(object, header,false)}}</span>
+                        </button>
+                    </div>
+                    <div ng-if="header.type == 'checkbox' && (header.showCondition == undefined && resolve(object,header,false) != undefined  || header.showCondition != undefined && header.showCondition(object))">
+                        <input type="checkbox" ng-model="object[header.value]">
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div ng-show="model.length == 0">
+        <h3 class="text-center margin-bot-20" translate>global.messages.noEntitiesFound</h3>
+    </div>
+</div>
+<div class="row" ng-show="model.length > 10">
+    <div class="col-xs-12 col-sm-6 col-md-8 m-b-md">
+        <div ng-show="numPages > 1">
+            <pagination total-items="model.length" ng-model="pageNumber" max-size="10" items-per-page="pageSize" boundary-links="true" rotate="false" num-pages="numPages"></pagination>
+        </div>
+    </div>
+    <div class="col-xs-6 col-md-4">
+        <div class="btn-group pull-right">
+            <label type="button" class="btn btn-sm btn-white" ng-change="pageSizeChanges()" ng-model="pageSize" btn-radio="10" uncheckable>10</label>
+            <label type="button" class="btn btn-sm btn-white" ng-change="pageSizeChanges()" ng-model="pageSize" btn-radio="25" uncheckable>25</label>
+            <label type="button" class="btn btn-sm btn-white" ng-change="pageSizeChanges()" ng-model="pageSize" btn-radio="50" uncheckable>50</label>
+            <label type="button" class="btn btn-sm btn-white" ng-change="pageSizeChanges()" ng-model="pageSize" btn-radio="100" uncheckable>100</label>
+        </div>
+    </div>
+</div>
+

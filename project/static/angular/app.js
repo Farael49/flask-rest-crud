@@ -9,5 +9,7 @@ angular.module('flaskAngular',
 	'summernote', 
 	'pascalprecht.translate', 
 	'toaster', 
-	'ngDialog'
+	'ngDialog',
+	'truncate',
+	'utils'
 	]);

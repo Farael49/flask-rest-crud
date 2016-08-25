@@ -11,16 +11,16 @@ angular.module('flaskAngular')
     )
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider
-            .when('/', {
-                templateUrl: '/views/articles.html',
-                controller: 'ArticleListController'
-            })
             .when('/role-manager', {
                 templateUrl:'views/role-manager.html',
                 controller:'RoleManagerController'
             })
+            .when('/user_list', {
+                templateUrl:'views/user_list.html',
+                controller:'UserListController'
+            })
             .otherwise({
                 redirectTo: '/'
             });
-
+ 
     }]);

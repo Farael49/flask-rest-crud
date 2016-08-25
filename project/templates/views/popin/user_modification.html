@@ -1,0 +1,89 @@
+<div class="neo-dialog-content">
+    <div class="wrapper wrapper-content" style="padding-bottom:0px;">
+        <form editable-form name="usersModificationForm" oncancel="askCancel()" onbeforesave="saveDialog()">
+            <div class="ibox float-e-margins content-white">
+                <h4 class="text-left" translate>
+                    administration.user_list.title
+                </h4>
+
+                <div class="ibox-content">
+                    <div ng-if="usersModificationForm.$invalidServerResponse" class="alert alert-danger">
+                        <h5 translate>global.form.invalidFormMessageTitle</h5>
+                        <ul>
+                            <li ng-repeat="fieldError in fieldsErrorMessages"><span translate>contrevenant.messages.{{ fieldError.field }}</span>: {{fieldError.message}}</li>
+                            <li ng-repeat="globalError in globalErrorMessages">{{ globalError.message }}</li>
+                        </ul>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-3 col-md-offset-3" ng-class="{'has-error':usersModificationForm.login.$invalid}">
+                            <label class="obligatoire" translate>administration.user_list.headers.login</label>
+                            <input name="username" class="form-control" ng-model="ngDialogData.username" required/>
+                        </div>
+                        <div class="col-xs-3" ng-class="{'has-error':usersModificationForm.email.$invalid}">
+                            <label class="obligatoire" translate>administration.user_list.headers.email</label>
+                            <input name="email" type="email" class="form-control" ng-model="ngDialogData.email" required/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-3 col-md-offset-3" ng-class="{'has-error':usersModificationForm.lastName.$invalid}">
+                            <label class="obligatoire" translate>administration.user_list.headers.nom</label>
+                            <input name="nom" class="form-control" ng-model="ngDialogData.lastName" required/>
+                        </div>
+                        <div class="col-xs-3" ng-class="{'has-error':usersModificationForm.firstName.$invalid}">
+                            <label class="obligatoire" translate>administration.user_list.headers.prenom</label>
+                            <input name="prenom" class="form-control" ng-model="ngDialogData.firstName" required/>
+                        </div>
+                    </div>
+                    <div class="row" >
+                        <div ng-if="loadedUser" class="col-xs-3 col-md-offset-3" ng-class="{'has-error':usersModificationForm.password.$invalid}">
+                            <label translate>global.form.newpassword</label>
+                            <a class="btn btn-sm m-t-xs btn-primary" ng-click="generatePassword()" title="{{'global.button.reinitialize' | translate}}" translate>global.button.reinitialize</a>
+                            <span ng-id="ngDialogData.passwordPlain">{{ngDialogData.passwordPlain}}</span>
+                        </div>
+                        <div ng-if="!loadedUser" class="col-xs-3 col-md-offset-3" ng-class="{'has-error':usersModificationForm.password.$invalid}">
+                            <label class="obligatoire" translate>global.form.password</label>
+                            <input name="password" class="form-control" ng-model="ngDialogData.password" required/>
+                        </div>
+                    </div>
+                    <div class="row" >
+                        <div class="col-xs-3 col-md-offset-3">
+                            <label translate>administration.user_list.headers.dateSortie</label>
+                            <input name="exitDate" class="form-control input-sm" ng-model="ngDialogData.exitDate" bs-datepicker autoclose="1" input-mask="99/99/9999"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6 text-align" ng-if="ngDialogData.nbEssaisLogin >= 0">
+                            <label translate>administration.user_list.headers.loginAttempts</label><div class="clearfix"></div>
+                            <h3>
+                                <span class="label label-sm m-t-xs ng-binding" ng-class="ngDialogData.nbEssaisLogin >= 5 ? 'label-danger' : 'label-warning'">{{ngDialogData.nbEssaisLogin}}</span>
+                                <a class="btn btn-sm m-t-xs btn-primary" ng-click="reinitNbEssaisLogin()" title="{{'global.button.reinitialize' | translate}}" translate>global.button.reinitialize</a>
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6 col-md-offset-3" ng-class="{'has-error':usersModificationForm.roles.$invalid}">
+                            <label translate>administration.user_list.headers.role</label>
+                            <br />
+                            <label ng-repeat="role in roles | orderBy:'name'">
+                                <input type="checkbox" checklist-model="userRoles" checklist-value="role" checklist-comparator="compareFn"> {{role.name}}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="height:20px">
+				<button type="button" class="btn btn-sm btn-danger pull-right m-t-n-md"
+					ng-click="askCancel()" title="{{'global.button.cancel' | translate}}">
+					<i class="fa fa-ban"></i>
+					<span translate>global.button.cancel</span>
+				</button>
+				<button type="submit" class="btn btn-sm btn-success pull-right m-t-n-md"
+					ng-disabled="usersModificationForm.$pristine" title="{{'global.button.save' | translate}}">
+					<i class="fa fa-check"></i>
+					<span translate>global.button.save</span>
+				</button>
+            </div>
+        </form>
+
+    </div>
+</div>
