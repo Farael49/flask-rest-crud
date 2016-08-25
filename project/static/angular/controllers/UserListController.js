@@ -9,11 +9,11 @@ angular.module('flaskAngular')
         comparator: '^'
     }, {
         title : 'Firstname',
-        value : 'firstName',
+        value : 'firstname',
         comparator: '^'
     }, {
         title : 'Lastname',
-        value : 'lastName',
+        value : 'lastname',
         comparator: '^'
     }, {
         title : 'Email',
@@ -21,23 +21,27 @@ angular.module('flaskAngular')
         comparator: '^'
     }, {
         title : 'Roles',
-        value : 'roleList',
+        value : 'roles',
         resolveFunction : function(cur, header, title) {
             if (!cur[header.value]){
                 return '';
             }
-            var isOne = cur[header.value].split("\n").length <= 1;
+            var isOne = cur[header.value].length <= 1;
             if (title) {
                 if (isOne) {
                     return '';
                 }
-                return cur[header.value];
+                var roles = cur[header.value];
+                var titleContent = '';
+                for (var i = 0; i < roles.length; i++)
+                    titleContent += roles[i].name + "\n"
+                return titleContent;
             } else {
                 if (isOne) {
-                    return cur[header.value];
+                    return cur[header.value].name;
                 }
-                var roles = cur[header.value].split("\n");
-                return roles[0] + " (+" + (roles.length - 1) + "...)";
+                var roles = cur[header.value];
+                return roles[0].name + " (+" + (roles.length - 1) + "...)";
             }
         }
     }];

@@ -78,7 +78,7 @@ angular.module('flaskAngular')
                 };
 
                 $scope.resolve = function(cur, header,title) {
-                    if (title && header.resolveFunction !== undefined) {
+                    if (header.resolveFunction !== undefined) {
                         return header.resolveFunction(cur, header, title);
                     }
                     if (title && !header.summaryValue){
