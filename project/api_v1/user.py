@@ -41,8 +41,10 @@ def get_current_user():
 @api.route('/users/<int:id>', methods=['GET'])
 @login_required
 def get_user(id):
-    return user_schema_secure.jsonify(User.query.get(id))
-
+    user = User.query.get(id)
+    if user is not None:
+        return user_schema_secure.jsonify(User.query.get(id))
+    return jsonify({}), 404
 
 @api.route('/users', methods=['POST'])
 @validate_json
@@ -50,10 +52,10 @@ def get_user(id):
 def create_user():
     scheme = user_schema.load(request.get_json(), partial=True)
     res = scheme.data
-    if User.query.filter_by(email=res.email).scalar() is not None:
-        return jsonify({}), 409
     if res.email is None or res.password is None:
         return jsonify({}), 400
+    if User.query.filter_by(email=res.email).first() is not None:
+        return user_schema_secure.jsonify(User.query.filter_by(email=res.email).first()), 409
     if res.username is None:
         res.username = res.email
     res.password = bcrypt.generate_password_hash(res.password)

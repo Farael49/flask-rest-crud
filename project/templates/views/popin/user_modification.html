@@ -26,18 +26,18 @@
                     </div>
                     <div class="row">
                         <div class="col-xs-6" ng-class="{'has-error':usersModificationForm.lastname.$invalid}">
-                            <label class="obligatoire" translate>nom</label>
+                            <label class="obligatoire" translate>first name</label>
                             <input name="nom" class="form-control" ng-model="ngDialogData.lastname" required/>
                         </div>
                         <div class="col-xs-6" ng-class="{'has-error':usersModificationForm.firstname.$invalid}">
-                            <label class="obligatoire" translate>prenom</label>
+                            <label class="obligatoire" translate>last name</label>
                             <input name="prenom" class="form-control" ng-model="ngDialogData.firstname" required/>
                         </div>
                     </div>
                     <div class="row" >
                         <div ng-if="loadedUser" class="col-xs-6" ng-class="{'has-error':usersModificationForm.password.$invalid}">
-                            <label translate>global.form.newpassword</label>
-                            <a class="btn btn-sm m-t-xs btn-primary" ng-click="generatePassword()" title="{{'global.button.reinitialize' | translate}}" translate>global.button.reinitialize</a>
+                            <label translate>New Password</label>
+                            <a class="btn btn-sm m-t-xs btn-primary" ng-click="generatePassword()" title="reinitialize" translate>reinitialize</a>
                             <span ng-id="ngDialogData.passwordPlain">{{ngDialogData.passwordPlain}}</span>
                         </div>
                         <div ng-if="!loadedUser" class="col-xs-6" ng-class="{'has-error':usersModificationForm.password.$invalid}">

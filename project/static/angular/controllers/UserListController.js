@@ -23,25 +23,17 @@ angular.module('flaskAngular')
         title : 'Roles',
         value : 'roles',
         resolveFunction : function(cur, header, title) {
-            if (!cur[header.value]){
+            if (!cur[header.value] || !cur[header.value][0]){
                 return '';
             }
-            var isOne = cur[header.value].length <= 1;
+            var content = '';
+            var roles = cur[header.value];    
             if (title) {
-                if (isOne) {
-                    return '';
-                }
-                var roles = cur[header.value];
-                var titleContent = '';
                 for (var i = 0; i < roles.length; i++)
-                    titleContent += roles[i].name + "\n"
-                return titleContent;
+                    content += roles[i].name + "\n";
+                return content;
             } else {
-                if (isOne) {
-                    return cur[header.value].name;
-                }
-                var roles = cur[header.value];
-                return roles[0].name + " (+" + (roles.length - 1) + "...)";
+                return roles.length <= 1 ? roles[0].name : roles[0].name + " (+" + (roles.length - 1) + "...)";
             }
         }
     }];
