@@ -8,6 +8,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from config import config
 from flask_login import LoginManager
+from flasgger import Swagger
 
 class CustomFlask(Flask):
     jinja_options = Flask.jinja_options.copy()
@@ -26,7 +27,7 @@ ma = Marshmallow(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
 bcrypt = Bcrypt(app)
-
+Swagger(app)
 
 def create_app(config_name):
     app.config.from_object(config[config_name])

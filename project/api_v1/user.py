@@ -15,6 +15,24 @@ def load_user(user_id):
 
 @api.route('/users/login', methods=['GET', 'POST'])
 def login():
+    """
+    Login function
+    ---
+    tags:
+      - users
+    parameters:
+      - name: email
+        in: query
+        type: string
+        required: true
+      - name: password
+        in: query
+        type: string
+        required: true
+    responses:
+      401:
+       description: Authentication failed
+    """
     credentials = request.get_json()
     user = User.query.filter_by(email=credentials['email']).first()
     if user and bcrypt.check_password_hash(user.password, credentials['password']):
