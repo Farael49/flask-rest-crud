@@ -18,17 +18,25 @@ def login():
     """
     Login function
     ---
+    consumes:
+      - application/json
     tags:
       - users
     parameters:
       - name: email
-        in: query
-        type: string
-        required: true
-      - name: password
-        in: query
-        type: string
-        required: true
+        in: body
+	required: true
+        schema:
+          id: user_login
+          properties:
+            email:
+              type: string
+            password:
+              type: string
+          required: [email, password]
+          example:
+            email: ""
+            password: ""
     responses:
       401:
        description: Authentication failed

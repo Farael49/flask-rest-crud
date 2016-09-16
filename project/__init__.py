@@ -1,7 +1,9 @@
 from flask import (
     Flask, 
     render_template,
-    send_from_directory
+    send_from_directory,
+    jsonify,
+    redirect
 )
 from flask_marshmallow import Marshmallow
 from flask_sqlalchemy import SQLAlchemy
@@ -27,6 +29,17 @@ ma = Marshmallow(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
 bcrypt = Bcrypt(app)
+
+app.config['SWAGGER'] = {
+    "specs": [
+        {
+            "version":"1",
+            "title":"Api v1",
+            "endpoint": "v1_spec",
+            "route":"/v1/spec/"
+        }
+    ]
+}
 Swagger(app)
 
 def create_app(config_name):
@@ -39,13 +52,15 @@ def create_app(config_name):
 
 @app.route('/', methods=['GET'])
 def index():
-    return render_template('index.html')
+    return redirect("/apidocs/index.html")
 
+
+
+'''
 @app.route('/<path:path>')
 def send_templates(path):
     return send_from_directory('templates', path)
 
-'''
 @app.route('/static/<path:path>')
 def send_statics(path):
     return send_from_directory('templates', path)
