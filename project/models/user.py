@@ -1,5 +1,6 @@
-from .. import db
+from .. import db, bcrypt
 from datetime import datetime
+
 roles = db.Table('user_role',
     db.Column('role_id', db.Integer, db.ForeignKey('role.id')),
     db.Column('user_id', db.Integer, db.ForeignKey('user.id'))
@@ -12,15 +13,23 @@ authorities = db.Table('role_authority',
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String, unique=True, nullable=False)
-    username = db.Column(db.String, unique=True, nullable=False)
-    firstname = db.Column(db.String)
-    lastname = db.Column(db.String)
-    password = db.Column(db.String)
+    email = db.Column(db.String(80), unique=True, nullable=False)
+    username = db.Column(db.String(80), unique=True, nullable=False)
+    firstname = db.Column(db.String(80))
+    lastname = db.Column(db.String(80))
+    password = db.Column(db.String(80))
     created_date = db.Column(db.DateTime, default=datetime.utcnow())
     enabled = db.Column(db.Boolean, default=True)
     roles = db.relationship('Role', secondary=roles, backref=db.backref('users', lazy='dynamic'))
     # Additional fields
+
+    
+    def __init__(self, email, password, username=None):
+        self.email = email
+        self.username = email if username is None else username
+        if password:
+            self.password =  bcrypt.generate_password_hash(password)
+    
 
     def is_authenticated(self):
         return True
@@ -39,15 +48,15 @@ class User(db.Model):
 
 class Role(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String)
-    description = db.Column(db.String)
+    name = db.Column(db.String(80))
+    description = db.Column(db.String(80))
     authorities = db.relationship('Authority', secondary=authorities, backref=db.backref('roles', lazy='dynamic'))
     def __repr__(self):
         return 'Role {}>'.format(self)
 
 class Authority(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String)
-    description = db.Column(db.String)
+    name = db.Column(db.String(80))
+    description = db.Column(db.String(80))
     def __repr__(self):
         return 'Authority {}>'.format(self)

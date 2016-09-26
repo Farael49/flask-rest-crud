@@ -8,7 +8,6 @@ from ..validator import validate_json, validate_schema
 from ..util import copy_not_null
 from flask_login import login_user, logout_user, login_required, current_user
 
-
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.filter(User.id == int(user_id)).first()
@@ -74,19 +73,41 @@ def get_user(id):
 
 @api.route('/users', methods=['POST'])
 @validate_json
-#@validate_schema('user_schema')
+@login_required
 def create_user():
+    """
+    Create a user
+    ---
+    consumes:
+      - application/json
+    tags:
+      - users
+    parameters:
+      - name: user
+        in: body
+        required: true
+        schema:
+          type: object
+          id: user_create
+          properties:
+            email:
+              type: string
+            password:
+              type: string
+          example:
+            email: ""
+            password: ""
+    responses:
+      401:
+       description: Authentication failed
+    """ 
     scheme = user_schema.load(request.get_json(), partial=True)
     res = scheme.data
-    if res.email is None or res.password is None:
+    if not res.email or not res.password:
         return jsonify({}), 400
     if User.query.filter_by(email=res.email).first() is not None:
         return user_schema_secure.jsonify(User.query.filter_by(email=res.email).first()), 409
-    if res.username is None:
-        res.username = res.email
-    res.password = bcrypt.generate_password_hash(res.password)
-    #res.created_date = str(datetime.now())
-    db.session.add(res)
+    db.session.add(User(res.email, res.password, res.username))
     db.session.commit()
     return user_schema_secure.jsonify(res)
 

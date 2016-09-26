@@ -5,7 +5,7 @@ import os
 from flask_script import Manager
 
 from project import create_app, db
-
+from project.models.user import User
 
 app = create_app(os.getenv('PROJECT_CONFIG', 'default'))
 manager = Manager(app)
@@ -19,6 +19,8 @@ def make_shell_context():
 def create_db():
     '''Creates the db tables.'''
     db.create_all()
+    db.session.add(User('root', 'root', None))
+    db.session.commit()
 
 @manager.command
 def drop_db():
