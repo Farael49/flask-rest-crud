@@ -12,7 +12,7 @@ from flask_login import login_user, logout_user, login_required, current_user
 def load_user(user_id):
     return User.query.filter(User.id == int(user_id)).first()
 
-@api.route('/users/login', methods=['GET', 'POST'])
+@api.route('/users/login', methods=['POST'])
 def login():
     """
     Login function
