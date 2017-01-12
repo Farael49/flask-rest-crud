@@ -4,6 +4,7 @@ from flask import (
     jsonify,
     request,
 )
+from flask_login import current_user
 
 def validate_json(f):
     @wraps(f)
@@ -28,3 +29,21 @@ def validate_schema(schema_name):
             return f(*args, **kw)
         return wrapper
     return decorator
+
+
+def requires_roles(*roles):
+    def wrapper(f):
+        @wraps(f)
+        def wrapped(*args, **kwargs):
+            if not current_user.is_authenticated:
+                return jsonify({"error":"Unauthorized"}), 401
+            if get_current_user_roles() not in roles:
+                return jsonify({"error":"Forbidden"}), 403
+            return f(*args, **kwargs)
+        return wrapped
+    return wrapper
+
+def get_current_user_roles():
+    if current_user.is_authenticated:
+        return [r.name for r in current_user.roles]            
+    return None
