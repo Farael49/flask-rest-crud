@@ -37,9 +37,9 @@ def requires_roles(*roles):
         def wrapped(*args, **kwargs):
             if not current_user.is_authenticated:
                 return jsonify({"error":"Unauthorized"}), 401
-            if get_current_user_roles() not in roles:
-                return jsonify({"error":"Forbidden"}), 403
-            return f(*args, **kwargs)
+            if any (r in get_current_user_roles() for r in roles):
+                return f(*args, **kwargs)
+            return jsonify({"error":"Forbidden"}), 403
         return wrapped
     return wrapper
 
