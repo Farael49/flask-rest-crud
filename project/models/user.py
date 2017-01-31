@@ -1,4 +1,4 @@
-from .. import db, bcrypt
+from .. import db
 from datetime import datetime
 
 roles = db.Table('user_role',
@@ -26,10 +26,8 @@ class User(db.Model):
     
     def __init__(self, email, password, username=None):
         self.email = email
-        self.username = email if username is None else username
-        if password:
-            self.password =  bcrypt.generate_password_hash(password)
-    
+        self.username = email if username is None else username   
+        self.password = password
 
     def is_authenticated(self):
         return True

@@ -107,7 +107,7 @@ def create_user():
         return jsonify({}), 400
     if User.query.filter_by(email=res.email).first() is not None:
         return user_schema_secure.jsonify(User.query.filter_by(email=res.email).first()), 409
-    db.session.add(User(res.email, res.password, res.username))
+    db.session.add(User(res.email, bcrypt.generate_password_hash(res.password), res.username))
     db.session.commit()
     return user_schema_secure.jsonify(res)
 
